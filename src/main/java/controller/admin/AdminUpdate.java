@@ -38,7 +38,6 @@ public class AdminUpdate {
                 break;
         }
 
-
         return "/admin";
     }
 }

@@ -15,6 +15,29 @@ public class BandDAO {
     private ResultSet resultSet;
     private int result;
 
+    public int createBand(String category, String name, String introduction, String location, String photo, int capacity, String createdBy) {
+        String sql = "insert into band values (null, ?, ?, ?, ?, ?, ?, default, ?, null, null);";
+
+        try {
+            connection = dbConnectionMgr.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, new CategoryDAO().selectCategoryByName(category).getId());
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, introduction);
+            preparedStatement.setString(4, location);
+            preparedStatement.setString(5, photo);
+            preparedStatement.setInt(6, capacity);
+            preparedStatement.setString(7, createdBy);
+            result = preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbConnectionMgr.freeConnection(connection, preparedStatement);
+        }
+
+        return result;
+    }
+
     public ArrayList<Band> selectBandAll() {
         ArrayList<Band> bands = new ArrayList<>();
         String sql = "select * from band;";
@@ -35,6 +58,7 @@ public class BandDAO {
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));
                 band.setUpdatedBy(resultSet.getString("updated_by"));
+
                 bands.add(band);
             }
         } catch (Exception e) {
@@ -149,4 +173,5 @@ public class BandDAO {
 
         return result;
     }
+
 }

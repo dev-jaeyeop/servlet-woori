@@ -15,6 +15,26 @@ public class CategoryDAO {
     private ResultSet resultSet;
     private int result;
 
+    public int createCategory(String id, String name, String icon, String createdBy) {
+        String sql = "insert into category values (id = ?, name = ?, icon = ?, created_at = default, created_by = ?, updated_at = null, updated_by = null);";
+
+        try {
+            connection = dbConnectionMgr.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, icon);
+            preparedStatement.setString(4, createdBy);
+            result = preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbConnectionMgr.freeConnection(connection, preparedStatement);
+        }
+
+        return result;
+    }
+
     public Category selectCategoryById(int categoryId) {
         Category category = new Category();
         String sql = "select * from category where id = ?";
@@ -27,7 +47,7 @@ public class CategoryDAO {
             if (resultSet.next()) {
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
-                category.setPhoto(resultSet.getString("photo"));
+                category.setIcon(resultSet.getString("icon"));
                 category.setCreatedAt(resultSet.getDate("created_at"));
                 category.setCreatedBy(resultSet.getString("created_by"));
                 category.setUpdatedAt(resultSet.getDate("updated_at"));
@@ -54,7 +74,7 @@ public class CategoryDAO {
             if (resultSet.next()) {
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
-                category.setPhoto(resultSet.getString("photo"));
+                category.setIcon(resultSet.getString("icon"));
                 category.setCreatedAt(resultSet.getDate("created_at"));
                 category.setCreatedBy(resultSet.getString("created_by"));
                 category.setUpdatedAt(resultSet.getDate("updated_at"));
@@ -81,7 +101,7 @@ public class CategoryDAO {
                 Category category = new Category();
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
-                category.setPhoto(resultSet.getString("photo"));
+                category.setIcon(resultSet.getString("icon"));
                 category.setCreatedAt(resultSet.getDate("created_at"));
                 category.setCreatedBy(resultSet.getString("created_by"));
                 category.setUpdatedAt(resultSet.getDate("updated_at"));

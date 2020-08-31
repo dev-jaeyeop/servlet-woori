@@ -11,6 +11,7 @@ public class Band {
     private String photo;
     private int capacity;
     private Date createdAt;
+    private String createdBy;
     private Date updatedAt;
     private String updatedBy;
 
@@ -77,6 +78,14 @@ public class Band {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getUpdatedAt() {

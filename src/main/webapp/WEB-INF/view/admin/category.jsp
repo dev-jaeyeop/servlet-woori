@@ -7,6 +7,10 @@
 --%>
 <h2>
     Category
+    <form id="createCategory" method="post">
+        <i class="far fa-plus-square" name="createButton" title="create"
+           onclick="action(this, 'createCategory', 'categoryForm', 'create')"></i>
+    </form>
 </h2>
 <br>
 <table>
@@ -16,6 +20,9 @@
         </th>
         <th>
             name
+        </th>
+        <th>
+            icon
         </th>
         <th>
             createdAt
@@ -43,6 +50,11 @@
                 <td>
                     <input type="text" name="name" class="categoryUpdateItem${category.id}" value="${category.name}"
                            readonly="readonly">
+                </td>
+                <td>
+                        ${category.icon}
+                    <input type="text" name="icon" class="categoryUpdateItem${category.id}" value='${category.icon}'
+                           readonly="readonly" style="width: 100%">
                 </td>
                 <td>
                     <input type="text" value="${category.createdAt}" readonly="readonly">

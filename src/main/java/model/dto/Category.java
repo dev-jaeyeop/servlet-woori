@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Category {
     private int id;
     private String name;
-    private String photo;
+    private String icon;
     private Date createdAt;
     private String createdBy;
     private Date updatedAt;
@@ -27,12 +27,12 @@ public class Category {
         this.name = name;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Date getCreatedAt() {

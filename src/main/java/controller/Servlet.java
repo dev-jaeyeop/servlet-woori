@@ -1,4 +1,9 @@
-package controller.admin;
+package controller;
+
+import controller.admin.AdminCreate;
+import controller.admin.AdminDelete;
+import controller.admin.AdminSelect;
+import controller.admin.AdminUpdate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Admin", urlPatterns = "/")
-public class Admin extends HttpServlet {
+@WebServlet(name = "Servlet", urlPatterns = "/")
+public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -23,10 +28,13 @@ public class Admin extends HttpServlet {
                 case "/admin":
                     request.getRequestDispatcher(new AdminSelect().process(request, response)).forward(request, response);
                     break;
-                case "/update":
+                case "/admin/create":
+                    response.sendRedirect(new AdminCreate().process(request, response));
+                    break;
+                case "/admin/update":
                     response.sendRedirect(new AdminUpdate().process(request, response));
                     break;
-                case "/delete":
+                case "/admin/delete":
                     response.sendRedirect(new AdminDelete().process(request, response));
                     break;
             }

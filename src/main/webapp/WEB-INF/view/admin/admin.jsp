@@ -61,7 +61,6 @@
 
         table {
             border-collapse: collapse;
-            width: 70%;
         }
 
         tr {
@@ -74,10 +73,6 @@
             height: 30px;
         }
 
-        td:last-child {
-            width: 10%;
-        }
-
         input[type=text] {
             width: 80px;
             text-align: center;
@@ -85,7 +80,11 @@
             outline: none;
         }
 
-        input[type=checkbox], td i {
+        input[type=checkbox] {
+            cursor: pointer;
+        }
+
+        .far {
             cursor: pointer;
         }
     </style>
@@ -142,11 +141,12 @@
     }
 
     function action(object, updateItem, formId, action) {
-        let updateItems = document.getElementsByClassName(updateItem);
         let form = document.getElementById(formId);
+        let updateItems = document.getElementsByClassName(updateItem);
 
         switch (action) {
-            case "created" :
+            case "create" :
+                open
                 break;
             case "delete" :
                 if (formId.indexOf("band") != -1) {
@@ -155,21 +155,24 @@
                         form.submit();
                     }
                 } else if (confirm("삭제 하시겠습니까?")) {
-                    form.action = "/delete";
+                    form.action = "/admin/delete";
                     form.submit();
                 }
                 break;
             case "update" :
                 if (object.className == "fas fa-edit") {
                     if (confirm("업데이트 하시겠습니까?")) {
-                        form.action = "/update";
+                        form.action = "/admin/update";
                         form.submit();
                     } else {
                         location.reload();
                     }
                 }
+
                 object.className = "fas fa-edit";
+                object.style.cursor = "pointer";
                 object.title = "update";
+
                 for (let j = 0; j < updateItems.length; j++) {
                     switch (updateItems.item(j).tagName) {
                         case "INPUT":
@@ -184,7 +187,17 @@
                 }
                 break;
             case "cancel" :
-                location.reload();
+                let fas = document.getElementsByClassName("fas fa-edit");
+
+                for (let i = 0; i < fas.length; i++) {
+                    fas[i].className = "far fa-edit";
+                }
+
+                for (let j = 0; j < updateItems.length; j++) {
+                    updateItems.item(j).readOnly = true;
+                    updateItems.item(j).style.outline = "none";
+                    updateItems.item(j).style.border = "none";
+                }
                 break;
         }
     }
