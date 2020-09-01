@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #wrap{
+            width: 500px;
+            height: 100vh;
+            background-color: white;
+            position: relative;
+        }
+        /* top */
+        .top{
+            display: flex;
+            background-color: #ec6169;
+            justify-content: space-around;
+        }
+        .exit{
+            font-size: 30px;
+        }
+        .mypage{
+            font-size: 30px;
+        }
+        .ham{
+            font-size: 30px;
+        }
+        /* end of top */
+        
+        /* mid */
+        .mid{
+            border: 1px solid black;
+        }
+        /* end of mid*/
+        .mid div{
+            font-size: 30px;            
+        }
+        
+        .photo{
+            width: 150px;
+            height: 150px;
+            border: 2px solid black;
+            border-radius: 50%;
+            margin: 30px;
+            background-image: url(ppl.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .bottom{
+            border: 1px solid black;
+            color: #fce77e;
+            font-size: 30px;
+        }
+        .bottom div{
+            border: 1px solid black;
+            height: 100px;
+        }
+    </style>        
+</head>
+<body>
+    <div id="wrap">
+        <div class="top">
+            <div class="ham"><i class="fas fa-bars"></i></div>
+            <div class="mypage">MyPage</div>
+            <div class="exit"><i class="fas fa-times"></i></div>
+        </div>
+        
+        <div class="mid">
+            <div class="photo"></div>
+            <div class="id"></div>
+        </div>    
+        <div class="bottom">    
+            <div class="interest"><i class="fas fa-heart">Interest</i></div>
+            <div class="club"><i class="fas fa-users">Group</i></div>
+            <div class="location"><i class="fas fa-map-marker-alt">Location</i></div>
+            <div class="info"><i class="fas fa-info">Info</i></div>
+        </div>           
+    </div>
+</body>
+</html>

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AdminDelete implements ServletInterface {
-
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {

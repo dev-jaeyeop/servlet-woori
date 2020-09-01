@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AdminCreate implements ServletInterface {
-
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {
