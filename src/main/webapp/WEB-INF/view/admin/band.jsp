@@ -54,18 +54,18 @@
                 </td>
                 <td>
                     <input type="text" name="name" class="bandUpdateItem${band.id}" value="${band.name}"
-                           readonly="readonly">
+                           readonly="readonly" required="required">
                 </td>
                 <td>
                     <input type="text" value="${band.introduction}" readonly="readonly">
                 </td>
                 <td>
                     <input type="text" name="location" class="bandUpdateItem${band.id}" value="${band.location}"
-                           readonly="readonly">
+                           readonly="readonly" required="required">
                 </td>
                 <td>
                     <input type="text" name="capacity" class="bandUpdateItem${band.id}" value="${band.capacity}"
-                           readonly="readonly">
+                           readonly="readonly" required="required">
                 </td>
                 <td>
                     <input type="text" value="${band.createdAt}" readonly="readonly">

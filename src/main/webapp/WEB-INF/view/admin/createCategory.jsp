@@ -11,6 +11,13 @@
     <title>create</title>
 </head>
 <body>
-
+<h2>create category</h2>
+<div>
+    name: <input type="text" name="name" required="required"> <br>
+    tag: <input type="text" name="icon" required="required"> <br> <br>
+    <input type="button" value="submit" onclick="">
+    <input type="text" name="createdBy" value="${sessionScope.loginId}">
+    <input type="hidden" name="type" value="category">
+</div>
 </body>
 </html>

@@ -1,13 +1,16 @@
 package controller.admin;
 
-import model.dao.BandDAO;
-import model.dao.CategoryDAO;
-import model.dao.UserDAO;
+import controller.servlet.ServletInterface;
+import dao.BandDAO;
+import dao.CategoryDAO;
+import dao.UserDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminDelete {
+public class AdminDelete implements ServletInterface {
+
+    @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {
             case "user":

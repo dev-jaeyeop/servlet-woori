@@ -1,4 +1,4 @@
-package controller;
+package controller.servlet;
 
 import controller.admin.AdminCreate;
 import controller.admin.AdminDelete;

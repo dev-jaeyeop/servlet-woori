@@ -1,4 +1,4 @@
-package model.dao;
+package dao;
 
 import dbConnection.DBConnectionMgr;
 import model.dto.Band;
@@ -39,8 +39,8 @@ public class BandDAO {
     }
 
     public ArrayList<Band> selectBandAll() {
-        ArrayList<Band> bands = new ArrayList<>();
         String sql = "select * from band;";
+        ArrayList<Band> bands = new ArrayList<>();
 
         try {
             connection = dbConnectionMgr.getConnection();
@@ -58,7 +58,6 @@ public class BandDAO {
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));
                 band.setUpdatedBy(resultSet.getString("updated_by"));
-
                 bands.add(band);
             }
         } catch (Exception e) {
@@ -71,8 +70,8 @@ public class BandDAO {
     }
 
     public ArrayList<Band> selectBandAllByCategoryId(String categoryId) {
-        ArrayList<Band> bands = new ArrayList<>();
         String sql = "select * from band where category_id = ?;";
+        ArrayList<Band> bands = new ArrayList<>();
 
         try {
             connection = dbConnectionMgr.getConnection();
@@ -102,9 +101,41 @@ public class BandDAO {
         return bands;
     }
 
+    public ArrayList<Band> selectBandAllByName(String name) {
+        String sql = "select * from band where name like = ?;";
+        ArrayList<Band> bands = new ArrayList<>();
+
+        try {
+            connection = dbConnectionMgr.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + name + "%");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Band band = new Band();
+                band.setId(resultSet.getInt("id"));
+                band.setCategory(new CategoryDAO().selectCategoryById(resultSet.getInt("category_id")).getName());
+                band.setName(resultSet.getString("name"));
+                band.setIntroduction(resultSet.getString("introduction"));
+                band.setLocation(resultSet.getString("location"));
+                band.setPhoto(resultSet.getString("photo"));
+                band.setCapacity(resultSet.getInt("capacity"));
+                band.setCreatedAt(resultSet.getDate("created_at"));
+                band.setUpdatedAt(resultSet.getDate("updated_at"));
+                band.setUpdatedBy(resultSet.getString("updated_by"));
+                bands.add(band);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+        }
+
+        return bands;
+    }
+
     public Band selectBandByBandId(int bandId) {
-        Band band = null;
         String sql = "select * from band where id = ?;";
+        Band band = null;
 
         try {
             connection = dbConnectionMgr.getConnection();
@@ -156,14 +187,13 @@ public class BandDAO {
 
     public int deleteBand(String bandId) {
         String sql = "delete from band where id = ?;";
-        UserDAO userDAO = new UserDAO();
 
         try {
             connection = dbConnectionMgr.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(bandId));
-            userDAO.deleteMemberByBandId(Integer.parseInt(bandId));
-            userDAO.deleteBookmarkByBandId(Integer.parseInt(bandId));
+            new MemberDAO().deleteMemberByBandId(Integer.parseInt(bandId));
+            new BookmarkDAO().deleteBookmarkByBandId(Integer.parseInt(bandId));
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,5 +203,4 @@ public class BandDAO {
 
         return result;
     }
-
 }

@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <h2>
-    Category
     <form id="createCategory" method="post">
+        Category
         <i class="far fa-plus-square" name="createButton" title="create"
            onclick="action(this, 'createCategory', 'categoryForm', 'create')"></i>
     </form>
@@ -49,12 +49,12 @@
                 </td>
                 <td>
                     <input type="text" name="name" class="categoryUpdateItem${category.id}" value="${category.name}"
-                           readonly="readonly">
+                           readonly="readonly" required="required">
                 </td>
                 <td>
                         ${category.icon}
                     <input type="text" name="icon" class="categoryUpdateItem${category.id}" value='${category.icon}'
-                           readonly="readonly" style="width: 100%">
+                           readonly="readonly" required="required" style="width: 100%">
                 </td>
                 <td>
                     <input type="text" value="${category.createdAt}" readonly="readonly">

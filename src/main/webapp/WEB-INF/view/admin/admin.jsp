@@ -146,7 +146,7 @@
 
         switch (action) {
             case "create" :
-                open
+                window.open("/createCategory");
                 break;
             case "delete" :
                 if (formId.indexOf("band") != -1) {

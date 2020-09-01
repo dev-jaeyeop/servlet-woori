@@ -1,4 +1,4 @@
-package model.dao;
+package dao;
 
 import dbConnection.DBConnectionMgr;
 import model.dto.Category;
@@ -15,16 +15,15 @@ public class CategoryDAO {
     private ResultSet resultSet;
     private int result;
 
-    public int createCategory(String id, String name, String icon, String createdBy) {
-        String sql = "insert into category values (id = ?, name = ?, icon = ?, created_at = default, created_by = ?, updated_at = null, updated_by = null);";
+    public int createCategory(String name, String icon, String createdBy) {
+        String sql = "insert into category values (id = null, name = ?, icon = ?, created_at = default, created_by = ?, updated_at = null, updated_by = null);";
 
         try {
             connection = dbConnectionMgr.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, icon);
-            preparedStatement.setString(4, createdBy);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, icon);
+            preparedStatement.setString(3, createdBy);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,8 +35,8 @@ public class CategoryDAO {
     }
 
     public Category selectCategoryById(int categoryId) {
-        Category category = new Category();
         String sql = "select * from category where id = ?";
+        Category category = null;
 
         try {
             connection = dbConnectionMgr.getConnection();
@@ -45,6 +44,7 @@ public class CategoryDAO {
             preparedStatement.setInt(1, categoryId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                category = new Category();
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
                 category.setIcon(resultSet.getString("icon"));
@@ -63,8 +63,8 @@ public class CategoryDAO {
     }
 
     public Category selectCategoryByName(String categoryName) {
-        Category category = new Category();
         String sql = "select * from category where name = ?";
+        Category category = null;
 
         try {
             connection = dbConnectionMgr.getConnection();
@@ -72,6 +72,7 @@ public class CategoryDAO {
             preparedStatement.setString(1, categoryName);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                category = new Category();
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
                 category.setIcon(resultSet.getString("icon"));
@@ -90,8 +91,8 @@ public class CategoryDAO {
     }
 
     public ArrayList<Category> selectCategoryAll() {
-        ArrayList<Category> categories = new ArrayList<>();
         String sql = "select * from category";
+        ArrayList<Category> categories = new ArrayList<>();
 
         try {
             connection = dbConnectionMgr.getConnection();
