@@ -16,6 +16,29 @@ public class UserDAO {
     ResultSet resultSet;
     int result;
 
+    public int createUser(String account, String password, String name, String email, String phoneNumber, String location) {
+        String sql = "insert into user values (null, default, ?, ?, ?, ?, ?, ?, ?, default, null, null);";
+
+        try {
+            connection = dbConnectionMgr.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, account);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, name);
+            preparedStatement.setString(4, email);
+            preparedStatement.setString(5, phoneNumber);
+            preparedStatement.setString(6, location);
+//            preparedStatement.setString(7, photo);
+            result = preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbConnectionMgr.freeConnection(connection, preparedStatement);
+        }
+
+        return result;
+    }
+
     public ArrayList<User> selectUserAll() {
         String sql = "select * from user;";
         ArrayList<User> users = new ArrayList<>();

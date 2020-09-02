@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <title>main</title>
+    <title>woori</title>
     <style>
         * {
             margin: 0;
@@ -278,11 +278,13 @@
 </div>
 </body>
 <script>
-    function loginFun() {
-        window.open("/login.jsp");
-    }
+    let joinForm;
 
     function joinFun() {
+        joinForm = window.open("/main/join", "_blank", "width=400, height=600");
+    }
+
+    function joinCloseFun() {
 
     }
 

@@ -1,6 +1,6 @@
-package controller.admin;
+package controller.handler.admin;
 
-import controller.servlet.ServletInterface;
+import controller.handler.ServletHandler;
 import dao.BandDAO;
 import dao.CategoryDAO;
 import dao.UserDAO;
@@ -8,7 +8,8 @@ import dao.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminDelete implements ServletInterface {
+public class AdminDelete implements ServletHandler {
+
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {

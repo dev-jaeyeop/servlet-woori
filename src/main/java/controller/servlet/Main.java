@@ -1,9 +1,6 @@
 package controller.servlet;
 
-import controller.admin.AdminCreate;
-import controller.admin.AdminDelete;
-import controller.admin.AdminSelect;
-import controller.admin.AdminUpdate;
+import controller.handler.main.MainCreate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Servlet", urlPatterns = "/")
-public class Servlet extends HttpServlet {
+@WebServlet(name = "Main", urlPatterns = "/main/*")
+public class Main extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -25,17 +22,17 @@ public class Servlet extends HttpServlet {
     public void process(HttpServletRequest request, HttpServletResponse response) {
         try {
             switch (request.getRequestURI()) {
-                case "/admin":
-                    request.getRequestDispatcher(new AdminSelect().process(request, response)).forward(request, response);
+                case "/main/login":
+                    request.getRequestDispatcher("/WEB-INF/view/main/login.jsp").forward(request, response);
                     break;
-                case "/admin/create":
-                    response.sendRedirect(new AdminCreate().process(request, response));
+                case "/main/join":
+                    request.getRequestDispatcher("/WEB-INF/view/main/join.jsp").forward(request, response);
                     break;
-                case "/admin/update":
-                    response.sendRedirect(new AdminUpdate().process(request, response));
+                case "/main/join/checkAccount":
+                    request.getRequestDispatcher("/WEB-INF/view/main/checkAccount.jsp").forward(request, response);
                     break;
-                case "/admin/delete":
-                    response.sendRedirect(new AdminDelete().process(request, response));
+                case "/main/join/process":
+                    request.getRequestDispatcher(new MainCreate().process(request, response)).forward(request, response);
                     break;
             }
         } catch (ServletException | IOException e) {

@@ -1,12 +1,13 @@
-package controller.admin;
+package controller.handler.admin;
 
-import controller.servlet.ServletInterface;
+import controller.handler.ServletHandler;
 import dao.CategoryDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminCreate implements ServletInterface {
+public class AdminCreate implements ServletHandler {
+
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {

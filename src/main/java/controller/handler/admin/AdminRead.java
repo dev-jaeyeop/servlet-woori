@@ -1,6 +1,6 @@
-package controller.admin;
+package controller.handler.admin;
 
-import controller.servlet.ServletInterface;
+import controller.handler.ServletHandler;
 import dao.BandDAO;
 import dao.CategoryDAO;
 import dao.UserDAO;
@@ -8,13 +8,14 @@ import dao.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminSelect implements ServletInterface {
+public class AdminRead implements ServletHandler {
+
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("users", new UserDAO().selectUserAll());
         request.setAttribute("bands", new BandDAO().selectBandAll());
         request.setAttribute("categories", new CategoryDAO().selectCategoryAll());
 
-        return "WEB-INF/view/admin/admin.jsp";
+        return "/WEB-INF/view/admin/admin.jsp";
     }
 }

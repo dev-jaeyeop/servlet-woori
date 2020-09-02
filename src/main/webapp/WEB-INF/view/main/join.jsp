@@ -2,7 +2,6 @@
          pageEncoding="UTF-8" %>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>join</title>
     <style>
         #checkID {
@@ -12,61 +11,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-
-<form action="/Woori/joinProcess.do" method="post" id="frm">
+<form id="joinForm" action="/main/join/process" method="post">
     <table>
         <tr>
-            <td colspan="3">
+            <th colspan="2">
                 JOIN
-            </td>
+            </th>
         </tr>
         <tr>
             <td>
-                account
+                account: <input type="text" id="account" name="account" required="required">
             </td>
-            <td>
-                <input type="text" name="account" required="required" id="account">
-            </td>
-            <td name="checkAccount" id="checkAccount" style="width: 120px; border-left: 0">
-
-            </td>
+            <td id="checkAccount" style="width: 120px; border-left: 0"></td>
         </tr>
         <tr>
-            <td>
-                password
-            </td>
             <td colspan="2">
-                <input type="text" name="pw" required="required">
+                password: <input type="text" name="password" required="required">
             </td>
         </tr>
         <tr>
-            <td>name</td>
-            <td colspan="2"><input type="text" name="name"
-                                   required="required"></td>
+            <td colspan="2">
+                name: <input type="text" name="name" required="required">
+            </td>
         </tr>
         <tr>
-            <td>email</td>
-            <td colspan="2"><input type="text" name="email"
-                                   required="required"></td>
+            <td colspan="2">
+                email: <input type="text" name="email" required="required">
+            </td>
         </tr>
         <tr>
-            <td>phone</td>
-            <td colspan="2"><input type="text" name="phone"
-                                   required="required"></td>
+            <td colspan="2">
+                phone: <input type="text" name="phoneNumber" required="required">
+            </td>
         </tr>
         <tr>
-            <td>address</td>
-            <td colspan="2"><input type="text" name="address"
-                                   required="required"></td>
+            <td colspan="2">
+                address: <input type="text" name="location" required="required">
+            </td>
         </tr>
         <tr>
-            <td>photo</td>
-            <td colspan="2"><input type="text" name="photo"
-                                   required="required"></td>
-        </tr>
-        <tr>
-            <td colspan="3"><input type="button" value="가입" onclick="reg()">
-                <input type="button" value="취소" onclick="can()"></td>
+            <td colspan="2">
+                <input type="button" value="가입" onclick="joinFun()">
+                <input type="button" value="취소" onclick="cancelFun()">
+            </td>
         </tr>
     </table>
 </form>
@@ -76,12 +63,11 @@
         var params = "account=" + $("#account").val();
         $.ajax({
             type: "POST",
-            url: "joinProc.jsp",
+            url: "/main/join/checkAccount",
             data: params,
             dataType: "json",
 
             error: function (error) {
-                alert("error!");
             },
 
             success: function (args) {
@@ -101,12 +87,14 @@
 
     });
 
-    function reg() {
-        document.getElementById("frm").submit();
+    function joinFun() {
+        document.getElementById("joinForm").submit(function () {
+            window.close();
+        });
     }
 
-    function can() {
-        location.href = "join.jsp";
+    function cancelFun() {
+        window.close();
     }
 </script>
 </body>

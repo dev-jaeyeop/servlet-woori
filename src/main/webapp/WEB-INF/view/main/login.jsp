@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>login</title>
     <style>
         * {
@@ -125,7 +124,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 </head>
 <body>
-<form action="/Woori/loginProcess.do">
+<form action="/main/join/process" method="post">
     <div class="wrap">
         <div class="top">Login</div>
         <div class="logo"></div>
