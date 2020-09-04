@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Category;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class InterestDAO {
-    DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -20,7 +20,7 @@ public class InterestDAO {
         ArrayList<Category> interest = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
@@ -30,7 +30,7 @@ public class InterestDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return interest;
@@ -41,7 +41,7 @@ public class InterestDAO {
         ArrayList<Category> interest = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, categoryId);
             resultSet = preparedStatement.executeQuery();
@@ -51,7 +51,7 @@ public class InterestDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return interest;
@@ -61,14 +61,14 @@ public class InterestDAO {
         String sql = "delete from interest where user_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

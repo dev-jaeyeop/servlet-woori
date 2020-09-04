@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Member;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class MemberDAO {
-    DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -19,7 +19,7 @@ public class MemberDAO {
         String sql = "insert into member values (null, ?, ?, ?, default);";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, bandId);
@@ -28,7 +28,7 @@ public class MemberDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -39,7 +39,7 @@ public class MemberDAO {
         ArrayList<Member> members = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
@@ -55,7 +55,7 @@ public class MemberDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return members;
@@ -66,7 +66,7 @@ public class MemberDAO {
         ArrayList<Member> members = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, bandId);
             resultSet = preparedStatement.executeQuery();
@@ -90,14 +90,14 @@ public class MemberDAO {
         String sql = "delete from member where user_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -107,14 +107,14 @@ public class MemberDAO {
         String sql = "delete from member where band_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, bandId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

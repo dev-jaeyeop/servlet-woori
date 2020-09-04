@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Category;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class CategoryDAO {
-    private DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    private DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -19,7 +19,7 @@ public class CategoryDAO {
         String sql = "insert into category values (id = null, name = ?, icon = ?, created_at = default, created_by = ?, updated_at = null, updated_by = null);";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, icon);
@@ -28,7 +28,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -39,7 +39,7 @@ public class CategoryDAO {
         Category category = null;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, categoryId);
             resultSet = preparedStatement.executeQuery();
@@ -56,7 +56,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return category;
@@ -67,7 +67,7 @@ public class CategoryDAO {
         Category category = null;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, categoryName);
             resultSet = preparedStatement.executeQuery();
@@ -84,7 +84,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return category;
@@ -95,7 +95,7 @@ public class CategoryDAO {
         ArrayList<Category> categories = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -112,7 +112,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return categories;
@@ -122,7 +122,7 @@ public class CategoryDAO {
         String sql = "update category set name = ? where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, Integer.parseInt(categoryId));
@@ -130,7 +130,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -140,7 +140,7 @@ public class CategoryDAO {
         String sql = "delete from category where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(categoryId));
             if (new BandDAO().selectBandAllByCategoryId(categoryId).size() == 0) {
@@ -149,7 +149,7 @@ public class CategoryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

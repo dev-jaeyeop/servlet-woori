@@ -32,7 +32,7 @@
             top: 5%;
             left: 30%;
             position: relative;
-            background-image: url(woori.png);
+            background-image: url(/image/logo.png);
             background-repeat: no-repeat;
             background-size: cover;
         }

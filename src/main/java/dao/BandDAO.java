@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Band;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class BandDAO {
-    private DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    private DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -19,7 +19,7 @@ public class BandDAO {
         String sql = "insert into band values (null, ?, ?, ?, ?, ?, ?, default, ?, null, null);";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, new CategoryDAO().selectCategoryByName(category).getId());
             preparedStatement.setString(2, name);
@@ -32,7 +32,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -43,7 +43,7 @@ public class BandDAO {
         ArrayList<Band> bands = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -63,7 +63,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return bands;
@@ -74,7 +74,7 @@ public class BandDAO {
         ArrayList<Band> bands = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(categoryId));
             resultSet = preparedStatement.executeQuery();
@@ -95,7 +95,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return bands;
@@ -106,7 +106,7 @@ public class BandDAO {
         ArrayList<Band> bands = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, "%" + name + "%");
             resultSet = preparedStatement.executeQuery();
@@ -127,7 +127,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return bands;
@@ -138,7 +138,7 @@ public class BandDAO {
         Band band = null;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, bandId);
             resultSet = preparedStatement.executeQuery();
@@ -158,7 +158,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return band;
@@ -168,7 +168,7 @@ public class BandDAO {
         String sql = "update band set name = ?, location = ?, capacity = ?, updated_by = ? where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, location);
@@ -179,7 +179,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -189,7 +189,7 @@ public class BandDAO {
         String sql = "delete from band where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(bandId));
             new MemberDAO().deleteMemberByBandId(Integer.parseInt(bandId));
@@ -198,7 +198,7 @@ public class BandDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

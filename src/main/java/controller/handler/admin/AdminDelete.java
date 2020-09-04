@@ -24,6 +24,6 @@ public class AdminDelete implements ServletHandler {
                 break;
         }
 
-        return "/admin";
+        return "/WEB-INF/view/admin/admin.jsp";
     }
 }

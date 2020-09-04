@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AdminCreate implements ServletHandler {
-
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("type")) {
@@ -20,6 +19,6 @@ public class AdminCreate implements ServletHandler {
                 break;
         }
 
-        return "/admin";
+        return "/WEB-INF/view/admin/admin.jsp";
     }
 }

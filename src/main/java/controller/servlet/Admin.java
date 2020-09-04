@@ -14,6 +14,11 @@ import java.io.IOException;
 
 @WebServlet(name = "Admin", urlPatterns = "/admin/*")
 public class Admin extends HttpServlet {
+    AdminCreate adminCreate = new AdminCreate();
+    AdminRead adminRead = new AdminRead();
+    AdminUpdate adminUpdate = new AdminUpdate();
+    AdminDelete adminDelete = new AdminDelete();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -26,16 +31,16 @@ public class Admin extends HttpServlet {
         try {
             switch (request.getRequestURI()) {
                 case "/admin":
-                    request.getRequestDispatcher(new AdminRead().process(request, response)).forward(request, response);
+                    request.getRequestDispatcher(adminRead.process(request, response)).forward(request, response);
                     break;
                 case "/admin/create":
-                    response.sendRedirect(new AdminCreate().process(request, response));
+                    response.sendRedirect(adminCreate.process(request, response));
                     break;
                 case "/admin/update":
-                    response.sendRedirect(new AdminUpdate().process(request, response));
+                    response.sendRedirect(adminUpdate.process(request, response));
                     break;
                 case "/admin/delete":
-                    response.sendRedirect(new AdminDelete().process(request, response));
+                    response.sendRedirect(adminDelete.process(request, response));
                     break;
             }
         } catch (ServletException | IOException e) {

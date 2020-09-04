@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Band;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class BookmarkDAO {
-    DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -20,7 +20,7 @@ public class BookmarkDAO {
         ArrayList<Band> bookmark = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
@@ -31,7 +31,7 @@ public class BookmarkDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return bookmark;
@@ -41,14 +41,14 @@ public class BookmarkDAO {
         String sql = "delete from bookmark where user_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -58,14 +58,14 @@ public class BookmarkDAO {
         String sql = "delete from bookmark where band_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, bandId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

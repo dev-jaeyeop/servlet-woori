@@ -1,13 +1,13 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class BoardDAO {
-    DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -17,14 +17,14 @@ public class BoardDAO {
         String sql = "delete from board where member_id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, memberId);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;

@@ -1,6 +1,6 @@
 package dao;
 
-import dbConnection.DBConnectionMgr;
+import controller.dbcp.DatabaseConnectionPool;
 import model.dto.Member;
 import model.dto.User;
 
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class UserDAO {
-    DBConnectionMgr dbConnectionMgr = new DBConnectionMgr();
+    DatabaseConnectionPool databaseConnectionPool = new DatabaseConnectionPool();
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -20,7 +20,7 @@ public class UserDAO {
         String sql = "insert into user values (null, default, ?, ?, ?, ?, ?, ?, ?, default, null, null);";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, account);
             preparedStatement.setString(2, password);
@@ -33,7 +33,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -44,7 +44,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -68,7 +68,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return users;
@@ -79,7 +79,7 @@ public class UserDAO {
         User user = null;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, account);
             resultSet = preparedStatement.executeQuery();
@@ -103,7 +103,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -114,7 +114,7 @@ public class UserDAO {
         User user = null;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(id));
             resultSet = preparedStatement.executeQuery();
@@ -138,7 +138,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -148,7 +148,7 @@ public class UserDAO {
         String sql = "update user set role = ?, password = ?, name = ?, email = ?, phone_number = ?, updated_by = ? where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, role);
             preparedStatement.setString(2, password);
@@ -161,7 +161,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -171,7 +171,7 @@ public class UserDAO {
         String sql = "delete from user where id = ?;";
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Integer.parseInt(id));
             if (selectUserById(id) != null) {
@@ -192,7 +192,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement);
+            databaseConnectionPool.freeConnection(connection, preparedStatement);
         }
 
         return result;
@@ -203,7 +203,7 @@ public class UserDAO {
         boolean exist = false;
 
         try {
-            connection = dbConnectionMgr.getConnection();
+            connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, account);
             preparedStatement.setString(2, password);
@@ -214,7 +214,7 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dbConnectionMgr.freeConnection(connection, preparedStatement, resultSet);
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
         }
 
         return exist;

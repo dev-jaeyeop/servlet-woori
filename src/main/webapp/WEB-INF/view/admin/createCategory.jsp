@@ -15,7 +15,7 @@
 <div>
     name: <input type="text" name="name" required="required"> <br>
     tag: <input type="text" name="icon" required="required"> <br> <br>
-    <input type="button" value="submit" onclick="">
+    <input type="submit" value="submit">
     <input type="text" name="createdBy" value="${sessionScope.loginId}">
     <input type="hidden" name="type" value="category">
 </div>

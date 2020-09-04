@@ -1,10 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html lang="ko">
+<%--
+  Created by IntelliJ IDEA.
+  User: user
+  Date: 2020-09-04
+  Time: 오후 3:12
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <title>woori</title>
+    <title>Woori</title>
     <style>
         * {
             margin: 0;
@@ -16,280 +20,197 @@
             list-style: none;
         }
 
-        #wrap {
+        .wrap {
             position: relative;
         }
 
-        .page1 {
+        .back {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: aliceblue;
+            opacity: 50%;
+            z-index: 1;
+            /*display: none;*/
+        }
+
+        #page1 {
             width: 100%;
             height: 100vh;
             left: 0;
             top: 0;
             position: relative;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-image: url(/image/illu.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        #page2 {
+            width: 100%;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            position: relative;
+            background-color: #fce77e;
             overflow: hidden;
         }
 
         .screen {
-            width: 40%;
-            height: 100%;
-            background-color: #ffffff;
-            background-color: rgba(0, 0, 0, 0.5);
-            float: right;
+            width: 500px;
+            height: 590px;
             position: relative;
-        }
-
-        #myVideo {
-            position: absolute;
-            min-width: 100%;
-            max-height: 120%;
-            top: 0;
-            left: 0;
-            z-index: -100;
-        }
-
-        .page1 ul {
-            position: absolute;
-            padding: 0;
-            margin: 0;
-            transform: translate(-50%, -50%);
-            display: flex;
-        }
-
-        .page1 ul li {
-            margin: 0 15px;
-        }
-
-        .page1 ul li .far, .page1 ul li .fab, .page1 ul li .fas {
-            font-size: 30px;
-            line-height: 60px;
-            transition: .6s;
-            color: #000;
-        }
-
-        .page1 ul li .far:hover, .page1 ul li .fab:hover, .page1 ul li .fas:hover {
-            color: #fff;
-        }
-
-        .page1 ul li a {
-            position: relative;
-            display: block;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ffff;
-            text-align: center;
-            transition: .6s;
-            box-shadow: 0 5px 4px rgba(0, 0, 0, .5);
-        }
-
-        .page1 ul li a:hover {
-            transform: translate(0, -10px);
-        }
-
-        .page1 ul li:nth-child(1) a:hover {
-            background-color: #00c300;
-        }
-
-        .page1 ul li:nth-child(2) a:hover {
-            background-color: #3b5999;
-        }
-
-        .page1 ul li:nth-child(3) a:hover {
-            background-color: #e4405f;
-        }
-
-        .page1 ul li:nth-child(4) a:hover {
-            background-color: #09b83e;
+            left: 36%;
         }
 
         .logo {
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            left: 17%;
-            top: 10%;
-            text-align: center;
-            position: relative;
-            background-image: url(woori.png);
+            left: 30%;
+            top: 5%;
+            width: 200px;
+            height: 200px;
+            background-image: url(/image/logo.png);
             background-repeat: no-repeat;
-            background-size: 470px;
+            background-size: cover;
+            position: absolute;
+            animation: dungdung 1s infinite alternate;
+        }
+
+        @keyframes dungdung {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(0, 30px);
+            }
+        }
+
+        .id {
+            position: absolute;
+            border-radius: 5px;
+            width: 200px;
+            height: 30px;
+            top: 45%;
+            left: 30%;
+        }
+
+        .pw {
+            position: absolute;
+            border-radius: 5px;
+            width: 200px;
+            height: 30px;
+            top: 53%;
+            left: 30%;
         }
 
         .login {
-            position: relative;
-            text-align: center;
-            font-size: 25px;
-            transition: .6s;
-            background-color: white;
-            box-shadow: 0 5px 4px rgba(0, 0, 0, .5);
-            font-family: 'Cute Font', cursive;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+            position: absolute;
+            border-radius: 5px;
             width: 200px;
             height: 30px;
-            left: 35%;
-            top: 7%;
-        }
-
-        .join {
-            position: relative;
+            top: 63%;
+            left: 30%;
+            background-color: #ec6169;
             text-align: center;
-            font-size: 25px;
-            transition: .6s;
-            background-color: white;
-            box-shadow: 0 5px 4px rgba(0, 0, 0, .5);
-            font-family: 'Cute Font', cursive;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            width: 200px;
-            height: 30px;
-            left: 35%;
-            top: 10%;
-        }
-
-        .social {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            flex-flow: row wrap;
-            left: 22%;
-            top: 17%;
+            color: white;
+            padding: 5px;
         }
 
         .login:hover {
-            background-color: #ec6169;
+            transition: all .5s;
+            transform: scale(1.1);
+        }
+
+        .social {
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            top: 71%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .box1, .box2, .box3, .box4, .box5 {
+            width: 10%;
+            margin: 0 5px;
+        }
+
+        .box1 img, .box2 img, .box3 img, .box4 img, .box5 img {
+            width: 100%;
+        }
+
+        .box1:hover, .box2:hover, .box3:hover, .box4:hover, .box5:hover {
+            transition: all .5s;
+            transform: scale(1.1);
+        }
+
+        .letter {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            top: 85%;
+            text-align: center;
+            color: gray;
+            font-weight: 900;
+        }
+
+        .join {
+            position: absolute;
+            border-radius: 5px 5px 5px 5px;
+            width: 200px;
+            height: 30px;
+            top: 90%;
+            left: 30%;
+            background-color: #fce77e;
+            text-align: center;
+            color: black;
+            padding: 5px;
         }
 
         .join:hover {
-            background-color: #fce77e;
-        }
-
-        .page2 {
-            width: 100%;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            position: relative;
-            /*background-image: url(그라데이션.jpg);*/
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        .screen2 {
-            width: 100%;
-            height: 500px;
-            position: absolute;
-            display: flex;
-            justify-content: space-between;
-            top: 20%;
-        }
-
-        .box {
-            width: 100%;
-            height: 500px;
-            position: absolute;
-        }
-
-        .box img {
-            width: 100%;
-            height: 500px;
-            border: 1px solid black;
-        }
-
-        button {
-            width: 30px;
-            height: 30px;
-        }
-
-        .moveL {
-            top: 50%;
-            left: 97.3%;
-            opacity: .3;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            position: absolute;
-            background-color: #ffffff;
-        }
-
-        .moveR {
-            top: 50%;
-            left: 97.3%;
-            opacity: .3;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            position: absolute;
-            background-color: #ffffff;
-        }
-
-
-        @media (max-width: 780px) {
-            .screen {
-                width: 100%
-            }
+            transition: all .5s;
+            transform: scale(1.1);
         }
     </style>
+    <script src="https://kit.fontawesome.com/4be9a87855.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div id="wrap">
-    <div class="page1">
-        <video autoplay muted loop id="myVideo">
-            <source src="Seoul.mp4" type="Video/mp4">
-            이 브라우저는 html5를 지원하지 않습니다.
-        </video>
+<div class="wrap">
+    <div class="back"></div>
+    <div id="joinPage">
+
+    </div>
+    <div id="page1" class="page">
         <div class="screen">
             <div class="logo"></div>
-            <div class="login" onclick="loginFun()" style="cursor: pointer">Login</div>
-            <div class="join" onclick="joinFun()" style="cursor: pointer">Join</div>
-
+            <form action="">
+                <input type="text" class="id" name="account" placeholder="User ID">
+                <input type="text" class="pw" name="password" placeholder="User PW">
+                <div class="login" style="cursor: pointer">LOGIN</div>
+            </form>
             <div class="social">
-                <ul class="icon">
-                    <li><a href="http://www.naver.com"><i class="far fa-envelope"></i></a></li>
-                    <li><a href="http://www.facebook.com"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="http://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
-                    <li><a href="http://www.wechat.com/ko/"><i class="fab fa-weixin"></i></a></li>
-                </ul>
+                <div class="box1"><a href="http://www.facebook.com"><img src="/image/facebook.png"></a></div>
+                <div class="box2"><a href="http://www.instagram.com"><img src="/image/insta.png"></a></div>
+                <div class="box3"><a href="http://www.twitter.com"><img src="/image/twitter.png"></a></div>
+                <div class="box4"><a href="http://www.kakaocorp.com"><img src="/image/kakao.png"></a></div>
+                <div class="box5"><a href="http://www.wechat.com"><img src="/image/wechat.png"></a></div>
             </div>
+            <div class="letter">지금 회원가입 하세요</div>
+            <div class="join" style="cursor: pointer" onclick="joinForm()">JOIN</div>
         </div>
     </div>
-
-    <div class="page2">
-        <div class="screen2">
-            <div class="bigBox">
-                <div class="box"><img src="humanities.jpg"></div>
-                <div class="box"><img src="cooking.jpg"></div>
-                <div class="box"><img src="language.png"></div>
-                <div class="box"><img src="pet.jpg"></div>
-                <div class="box"><img src="sport.jpg"></div>
-                <div class="box"><img src="travel.jpg"></div>
-                <div class="box"><img src="사교.jpg"></div>
-                <div class="box"><img src="클라이밍.jpg"></div>
-            </div>
-        </div>
-        <div class="moveL"><img src="arrowleft.jpg"></div>
-        <div class="moveR"><img scr="arrowright.png"></div>
+    <div id="page2" class="page">
     </div>
 </div>
 </body>
 <script>
-    let joinForm;
-
-    function joinFun() {
-        joinForm = window.open("/main/join", "_blank", "width=400, height=600");
-    }
-
-    function joinCloseFun() {
-
+    function joinForm() {
+        window.open("/main/join", "_blank", "width=500, height=600");
     }
 
     $(document).ready(function () {
-        $(".page1").on("mousewheel DOMMouseScroll", function (e) {
+        $(".page").on("mousewheel DOMMouseScroll", function (e) {
             e.preventDefault();
             var e = e.originalEvent;
             var delta = 0;
@@ -305,50 +226,30 @@
             } else {
                 moveTop = $(this).prev().offset().top;
             }
-            $("html, body").animate({
+            $("html, body").stop().animate({
                 scrollTop: moveTop + "px"
             }, 800)
         });
-
-        $(".page2").on("mousewheel DOMMouseScroll", function (e) {
-            e.preventDefault();
-            var e = e.originalEvent;
-            var delta = 0;
-            if (e.detail) {
-                delta = e.detail * -40;
-            } else {
-                delta = e.wheelDelta;
-            }
-
-            var moveTop = 0;
-            if (delta < 0) {
-                moveTop = $(this).next().offset().top;
-            } else {
-                moveTop = $(this).prev().offset().top;
-            }
-            $("html, body").animate({
-                scrollTop: moveTop + "px"
-            }, 800)
-        })
     });
-
-    $(document).ready(function () {
-        $(".moveR").click(function () {
-            $(".bigbox").animate({left: "-210px"}, 500, function () {
-                var right = $(".box").eq(0).detach();
-                $(".bigbox").css("left", "8px");
-                $(".bigbox").append(right);
-            });
-        });
-
-        $(".moveL").click(function () {
-            var left = $(".box").eq(2).detach();
-            $(".bigbox").prepend(left);
-            $(".bigbox").css("left", "-210px");
-            $(".bigbox").animate({
-                left: "8px"
-            });
-        });
-    });
+    //            $(".page2").on("mousewheel DOMMouseScroll",function(e){
+    //                e.preventDefault();
+    //                var e = e.originalEvent;
+    //                var delta=0;
+    //                if(e.detail){
+    //                    delta = e.detail * -40;
+    //                }else{
+    //                    delta = e.wheelDelta;
+    //                }
+    //
+    //                var moveTop = 0;
+    //                if(delta<0){
+    //                    moveTop = $(this).next().offset().top;
+    //                }else{
+    //                    moveTop = $(this).prev().offset().top;
+    //                }
+    //                $("html, body").animate({
+    //                    scrollTop : moveTop+"px"
+    //                },800)
+    //            });
 </script>
 </html>

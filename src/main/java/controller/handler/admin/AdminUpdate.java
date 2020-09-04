@@ -41,6 +41,6 @@ public class AdminUpdate implements ServletHandler {
                 break;
         }
 
-        return "/admin";
+        return "/WEB-INF/view/admin/admin.jsp";
     }
 }
