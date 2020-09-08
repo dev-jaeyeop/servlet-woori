@@ -12,7 +12,6 @@ public class User {
     private String email;
     private String phoneNumber;
     private String location;
-    private String photo;
     private Date createdAt;
     private Date updatedAt;
     private String updatedBy;
@@ -81,14 +80,6 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public Date getCreatedAt() {

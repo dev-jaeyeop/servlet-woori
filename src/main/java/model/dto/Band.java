@@ -8,7 +8,6 @@ public class Band {
     private String name;
     private String introduction;
     private String location;
-    private String photo;
     private int capacity;
     private Date createdAt;
     private String createdBy;
@@ -54,14 +53,6 @@ public class Band {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public int getCapacity() {

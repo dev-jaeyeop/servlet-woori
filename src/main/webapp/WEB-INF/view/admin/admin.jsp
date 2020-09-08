@@ -55,7 +55,7 @@
             padding: 10px;
         }
 
-        #band, #category {
+        #band, #category, #board {
             display: none;
         }
 
@@ -92,7 +92,7 @@
 </head>
 <body>
 <header>
-    <h1>Admin</h1>
+    <h1>Admin  <input type="button" value="Logout&Home" onclick="location.href='/'" style="display: revert"></h1>
 </header>
 <nav>
     <div onclick="view('user')">
@@ -102,7 +102,10 @@
         <i class="fas fa-users-cog"></i><br>Band
     </div>
     <div onclick="view('category')">
-        <i class="fas fa-wrench"></i><br>Category
+        <i class="fas fa-icons"></i><br>Category
+    </div>
+    <div onclick="view('board')">
+        <i class="fas fa-list"></i><br>Board
     </div>
 </nav>
 <main>
@@ -116,6 +119,9 @@
         <article id="category">
             <%@include file="category.jsp" %>
         </article>
+        <article id="board">
+            <%@include file="board.jsp" %>
+        </article>
     </section>
 </main>
 </body>
@@ -126,16 +132,25 @@
                 document.getElementById("user").style.display = "revert";
                 document.getElementById("band").style.display = "none";
                 document.getElementById("category").style.display = "none"
+                document.getElementById("board").style.display = "none"
                 break;
             case "band":
                 document.getElementById("band").style.display = "revert";
                 document.getElementById("user").style.display = "none";
                 document.getElementById("category").style.display = "none"
+                document.getElementById("board").style.display = "none"
                 break;
             case "category":
                 document.getElementById("category").style.display = "revert";
                 document.getElementById("user").style.display = "none";
                 document.getElementById("band").style.display = "none"
+                document.getElementById("board").style.display = "none"
+                break;
+            case "board":
+                document.getElementById("board").style.display = "revert"
+                document.getElementById("user").style.display = "none";
+                document.getElementById("band").style.display = "none"
+                document.getElementById("category").style.display = "none";
                 break;
         }
     }
@@ -146,12 +161,15 @@
 
         switch (action) {
             case "create" :
-                window.open("/createCategory");
+                if (confirm("추가 하시겠습니까?")) {
+                    form.action = "/admin/create"
+                    form.submit();
+                }
                 break;
             case "delete" :
                 if (formId.indexOf("band") != -1) {
                     if (confirm("삭제 하시겠습니까?") && confirm("현재 속해있는 멤버가 있을 수 있습니다 삭제 하시겠습니까?")) {
-                        form.action = "/delete";
+                        form.action = "/admin/delete";
                         form.submit();
                     }
                 } else if (confirm("삭제 하시겠습니까?")) {

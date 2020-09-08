@@ -1,12 +1,13 @@
 package dao;
 
-import controller.dbcp.DatabaseConnectionPool;
+import dbcp.DatabaseConnectionPool;
 import model.dto.Member;
 import model.dto.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserDAO {
@@ -17,7 +18,7 @@ public class UserDAO {
     int result;
 
     public int createUser(String account, String password, String name, String email, String phoneNumber, String location) {
-        String sql = "insert into user values (null, default, ?, ?, ?, ?, ?, ?, ?, default, null, null);";
+        String sql = "insert into user values (null, default, ?, ?, ?, ?, ?, ?, default, null, null);";
 
         try {
             connection = databaseConnectionPool.getDataSource().getConnection();
@@ -28,7 +29,6 @@ public class UserDAO {
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, phoneNumber);
             preparedStatement.setString(6, location);
-//            preparedStatement.setString(7, photo);
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +57,6 @@ public class UserDAO {
                 user.setEmail(resultSet.getString("email"));
                 user.setPhoneNumber(resultSet.getString("phone_number"));
                 user.setLocation(resultSet.getString("location"));
-                user.setPhoto(resultSet.getString("photo"));
                 user.setCreatedAt(resultSet.getDate("created_at"));
                 user.setUpdatedAt(resultSet.getDate("updated_at"));
                 user.setUpdatedBy(resultSet.getString("updated_by"));
@@ -93,7 +92,6 @@ public class UserDAO {
                 user.setEmail(resultSet.getString("email"));
                 user.setPhoneNumber(resultSet.getString("phone_number"));
                 user.setLocation(resultSet.getString("location"));
-                user.setPhoto(resultSet.getString("photo"));
                 user.setCreatedAt(resultSet.getDate("created_at"));
                 user.setUpdatedAt(resultSet.getDate("updated_at"));
                 user.setUpdatedBy(resultSet.getString("updated_by"));
@@ -128,7 +126,6 @@ public class UserDAO {
                 user.setEmail(resultSet.getString("email"));
                 user.setPhoneNumber(resultSet.getString("phone_number"));
                 user.setLocation(resultSet.getString("location"));
-                user.setPhoto(resultSet.getString("photo"));
                 user.setCreatedAt(resultSet.getDate("created_at"));
                 user.setUpdatedAt(resultSet.getDate("updated_at"));
                 user.setUpdatedBy(resultSet.getString("updated_by"));
@@ -182,8 +179,8 @@ public class UserDAO {
                     ReplyDAO replyDAO = new ReplyDAO();
                     BoardDAO boardDAO = new BoardDAO();
                     for (int i = 0; i < members.size(); i++) {
-                        replyDAO.deleteReply(members.get(i).getId());
-                        boardDAO.deleteBoard(members.get(i).getId());
+                        replyDAO.deleteReplyByMemberId(members.get(i).getId());
+                        boardDAO.deleteBoardByMemberId(members.get(i).getId());
                     }
                     new MemberDAO().deleteMemberByUserId(Integer.parseInt(id));
                 }
@@ -198,8 +195,29 @@ public class UserDAO {
         return result;
     }
 
+    public boolean existAccount(String account) {
+        String sql = "select * from user where account = ?;";
+        boolean exist = false;
+
+        try {
+            connection = databaseConnectionPool.getDataSource().getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, account);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                exist = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            databaseConnectionPool.freeConnection(connection, preparedStatement, resultSet);
+        }
+
+        return exist;
+    }
+
     public boolean existUser(String account, String password) {
-        String sql = "select * from user where account = ? and password = ?";
+        String sql = "select * from user where account = ? and password = ?;";
         boolean exist = false;
 
         try {
@@ -209,7 +227,7 @@ public class UserDAO {
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                exist = true;
+
             }
         } catch (Exception e) {
             e.printStackTrace();

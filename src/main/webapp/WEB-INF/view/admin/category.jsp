@@ -5,14 +5,17 @@
   Time: 10:03 PM
   To change this template use File | Settings | File Templates.
 --%>
-<h2>
-    <form id="createCategory" method="post">
-        Category
-        <i class="far fa-plus-square" name="createButton" title="create"
-           onclick="action(this, 'createCategory', 'categoryForm', 'create')"></i>
-    </form>
+<h2 style="display: inline-block">
+    Category
 </h2>
-<br>
+<form id="createCategory" method="post" style="display: inline-block">
+    <input type="hidden" name="type" value="category">
+    name: <input type="text" name="name" required="required" style="outline: revert; border: revert">
+    tag: <input type="text" name="icon" required="required" style="outline: revert; border: revert">
+    <i class="far fa-plus-square" name="createButton" title="create"
+       onclick="action(this, 'createCategory', 'createCategory', 'create')"></i>
+</form>
+<br><br>
 <table>
     <tr>
         <th>

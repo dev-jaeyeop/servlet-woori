@@ -1,6 +1,6 @@
 package dao;
 
-import controller.dbcp.DatabaseConnectionPool;
+import dbcp.DatabaseConnectionPool;
 import model.dto.Member;
 
 import java.sql.Connection;

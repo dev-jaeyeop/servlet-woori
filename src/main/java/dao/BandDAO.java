@@ -1,6 +1,6 @@
 package dao;
 
-import controller.dbcp.DatabaseConnectionPool;
+import dbcp.DatabaseConnectionPool;
 import model.dto.Band;
 
 import java.sql.Connection;
@@ -53,7 +53,6 @@ public class BandDAO {
                 band.setName(resultSet.getString("name"));
                 band.setIntroduction(resultSet.getString("introduction"));
                 band.setLocation(resultSet.getString("location"));
-                band.setPhoto(resultSet.getString("photo"));
                 band.setCapacity(resultSet.getInt("capacity"));
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));
@@ -85,7 +84,6 @@ public class BandDAO {
                 band.setName(resultSet.getString("name"));
                 band.setIntroduction(resultSet.getString("introduction"));
                 band.setLocation(resultSet.getString("location"));
-                band.setPhoto(resultSet.getString("photo"));
                 band.setCapacity(resultSet.getInt("capacity"));
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));
@@ -117,7 +115,6 @@ public class BandDAO {
                 band.setName(resultSet.getString("name"));
                 band.setIntroduction(resultSet.getString("introduction"));
                 band.setLocation(resultSet.getString("location"));
-                band.setPhoto(resultSet.getString("photo"));
                 band.setCapacity(resultSet.getInt("capacity"));
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));
@@ -149,7 +146,6 @@ public class BandDAO {
                 band.setName(resultSet.getString("name"));
                 band.setIntroduction(resultSet.getString("introduction"));
                 band.setLocation(resultSet.getString("location"));
-                band.setPhoto(resultSet.getString("photo"));
                 band.setCapacity(resultSet.getInt("capacity"));
                 band.setCreatedAt(resultSet.getDate("created_at"));
                 band.setUpdatedAt(resultSet.getDate("updated_at"));

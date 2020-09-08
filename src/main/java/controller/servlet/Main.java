@@ -1,6 +1,8 @@
 package controller.servlet;
 
-import controller.handler.main.MainCreate;
+import service.main.MainCheckAccount;
+import service.main.MainCreate;
+import service.main.MainRead;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,20 +24,20 @@ public class Main extends HttpServlet {
     public void process(HttpServletRequest request, HttpServletResponse response) {
         try {
             switch (request.getRequestURI()) {
+                case "/main":
+                    response.sendRedirect("/WEB-INF/view/main/main.jsp");
+                    break;
                 case "/main/login":
-                    request.getRequestDispatcher("/WEB-INF/view/main/login.jsp").forward(request, response);
+                    response.sendRedirect(new MainRead().process(request, response));
                     break;
                 case "/main/join":
-                    request.getRequestDispatcher("/WEB-INF/view/main/join.jsp").forward(request, response);
+                    response.sendRedirect(new MainCreate().process(request, response));
                     break;
-                case "/main/join/checkAccount":
-                    request.getRequestDispatcher("/WEB-INF/view/main/checkAccount.jsp").forward(request, response);
-                    break;
-                case "/main/join/process":
-                    request.getRequestDispatcher(new MainCreate().process(request, response)).forward(request, response);
+                case "/main/checkAccount":
+                    new MainCheckAccount().process(request, response);
                     break;
             }
-        } catch (ServletException | IOException e) {
+        } catch (IOException  e) {
             e.printStackTrace();
         }
     }

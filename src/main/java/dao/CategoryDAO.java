@@ -1,6 +1,6 @@
 package dao;
 
-import controller.dbcp.DatabaseConnectionPool;
+import dbcp.DatabaseConnectionPool;
 import model.dto.Category;
 
 import java.sql.Connection;
@@ -16,7 +16,7 @@ public class CategoryDAO {
     private int result;
 
     public int createCategory(String name, String icon, String createdBy) {
-        String sql = "insert into category values (id = null, name = ?, icon = ?, created_at = default, created_by = ?, updated_at = null, updated_by = null);";
+        String sql = "insert into category values (null, ?, ?, default, ?, null, null);";
 
         try {
             connection = databaseConnectionPool.getDataSource().getConnection();
@@ -118,14 +118,15 @@ public class CategoryDAO {
         return categories;
     }
 
-    public int updateCategory(String categoryId, String name) {
-        String sql = "update category set name = ? where id = ?;";
+    public int updateCategory(String categoryId, String name, String icon) {
+        String sql = "update category set name = ?, icon = ? where id = ?;";
 
         try {
             connection = databaseConnectionPool.getDataSource().getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, Integer.parseInt(categoryId));
+            preparedStatement.setString(2, icon);
+            preparedStatement.setInt(3, Integer.parseInt(categoryId));
             result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

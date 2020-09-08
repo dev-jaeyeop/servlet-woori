@@ -1,9 +1,9 @@
 package controller.servlet;
 
-import controller.handler.admin.AdminCreate;
-import controller.handler.admin.AdminDelete;
-import controller.handler.admin.AdminRead;
-import controller.handler.admin.AdminUpdate;
+import service.admin.AdminCreate;
+import service.admin.AdminDelete;
+import service.admin.AdminRead;
+import service.admin.AdminUpdate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
